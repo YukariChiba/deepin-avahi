@@ -1,3 +1,71 @@
+avahi (0.8-9) unstable; urgency=medium
+
+  [ Gioele Barabucci ]
+  * Install dbus policy in /usr instead of /etc (Closes: #1031550)
+
+ -- Michael Biebl <biebl@debian.org>  Sat, 18 Feb 2023 23:09:58 +0100
+
+avahi (0.8-8) unstable; urgency=medium
+
+  * Remove obsolete SysV init scripts
+  * Demote resolvconf to a Suggests for avahi-dnsconfd
+
+ -- Michael Biebl <biebl@debian.org>  Sun, 05 Feb 2023 14:21:18 +0100
+
+avahi (0.8-7) unstable; urgency=medium
+
+  [ Debian Janitor ]
+  * Remove constraints unnecessary since buster
+    * Build-Depends: Drop versioned constraint on intltool, libcap-dev,
+      libdaemon-dev, libdbus-1-dev and libglib2.0-dev.
+    * avahi-daemon: Drop versioned constraint on libnss-mdns in Recommends.
+    * libavahi-client-dev: Drop versioned constraint on libdbus-1-dev in
+      Depends.
+    * libavahi-compat-libdnssd1: Drop versioned constraint on libnss-mdns in
+      Recommends.
+    * Remove 3 maintscript entries from 2 files.
+    Changes-By: deb-scrub-obsolete
+
+  [ Michael Biebl ]
+  * Fix encoding of avahi-common/domain.h to be valid UTF-8
+  * Avoid infinite-loop in avahi-daemon by handling HUP event in client_work.
+    Fixes a local DoS that could be triggered by writing long lines to
+    /run/avahi-daemon/socket.
+    (CVE-2021-3468, Closes: #984938)
+  * Bump Standards-Version to 4.6.2
+  * Update homepage URL in debian/{copyright,control} and use https
+  * Remove obsolete migration code
+  * Drop obsolete Conflicts against zeroconf from avahi-autoipd
+  * Use execute_{after,before} instead of override where possible
+
+ -- Michael Biebl <biebl@debian.org>  Tue, 10 Jan 2023 09:33:02 +0100
+
+avahi (0.8-6) unstable; urgency=medium
+
+  [ Luca Boccassi ]
+  * avahi-daemon: depend on default-dbus-system-bus | dbus-system-bus.
+    This allows the reference implementation to be removed if using a
+    different system bus implementation such as dbus-broker.
+    [smcv: Adjust commit message]
+
+  [ Simon McVittie ]
+  * Add patch to fix display of URLs containing '&' in avahi-discover
+  * Standards-Version: 4.6.0 (no changes required)
+  * Use recommended debhelper compat level 13
+
+  [ Michael Biebl ]
+  * Do not disable timeout cleanup on watch cleanup.
+    This was causing timeouts to never be removed from the linked list that
+    tracks them, resulting in both memory and CPU usage to grow larger over
+    time. Thanks to Gustavo Noronha Silva (Closes: #993051)
+  * Drop obsolete lsb-base Depends
+  * Fix NULL pointer crashes when trying to resolve badly-formatted hostnames.
+    Fixes a local DoS in avahi-daemon that can be triggered by trying to
+    resolve badly-formatted hostnames on the /run/avahi-daemon/socket
+    interface. (CVE-2021-3502, Closes: #986018)
+
+ -- Michael Biebl <biebl@debian.org>  Sun, 05 Jun 2022 18:33:10 +0200
+
 avahi (0.8-5) unstable; urgency=medium
 
   * d/avahi-daemon.maintscript: Drop removal of symlink, they're not normal
